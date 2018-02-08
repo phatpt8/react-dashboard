@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
 import navigation from 'actions/nav.reducer';
+import loading from 'actions/loading.reducer';
 
 const reducers = combineReducers({
-  navigation
+  navigation,
+  loading,
 });
 
 export default reducers;

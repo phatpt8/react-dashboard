@@ -51,7 +51,7 @@ module.exports = {
                 }
             }]
         }, {
-            test: /\.(sass|css)$/,
+            test: /\.(scss|css)$/,
             use: ExtractTextPlugin.extract({
                 fallback: 'style-loader',
                 use: [
@@ -84,10 +84,6 @@ module.exports = {
             },
         },
         ]
-    },
-    devServer: {
-        historyApiFallback: true,
-        contentBase: sourcePath,
     },
     plugins: prodPlugins([
         new webpack.DefinePlugin({
