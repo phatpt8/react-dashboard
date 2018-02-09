@@ -37,8 +37,13 @@
   &._block-list-accounts {
     display: flex;
     justify-content: space-between;
-    padding: .75rem 1.25rem;
+    padding: 10px 20px;
     border-bottom: 1px solid #F3F1F1;
+  }
+  &._list-accounts-title {
+    color: #455A64;
+    font-weight: 400;
+    font-size: 18px;
   }
   &._add-account {
     background: #1976D2;
@@ -51,5 +56,19 @@
     a {
       color: #FFF;
     }
+  }
+  &._block-search-accounts {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 20px 10px 5px;
+  }
+  &._search-input-wrapper {
+    width: 100%;
+  }
+  &._refresh-account {
+    flex-shrink: 0;
+  }
+  &._table-wrapper {
+    padding: 0px 20px 20px;
   }
 }

@@ -15,16 +15,17 @@
   },
   "scripts": {
     "start": "NODE_ENV=development && webpack-dev-server --config webpack/webpack.base.js --inline --color --hot",
-    "build": "rimraf build && NODE_ENV=production webpack --config webpack/webpack.base.js --progress --profile --bail && npm run postinstall",
-    "postinstall": "mkdir -p build && cp -R node_modules/bootstrap/dist/* build/"
+    "build": "rimraf build && NODE_ENV=production webpack --config webpack/webpack.base.js --progress --profile --bail",
+    "build:bootstrap": "mkdir -p build && cp -R node_modules/bootstrap/dist/* build/"
   },
   "dependencies": {
     "classnames": "^2.2.5",
     "prop-types": "^15.6.0",
     "querystring": "^0.2.0",
-    "react": "^16.0.0",
+    "bootstrap": "3.3.6",
+    "react": "15.4.2",
     "react-bootstrap": "^0.32.1",
-    "react-dom": "^16.0.0",
+    "react-dom": "15.4.2",
     "react-redux": "^4.4.5",
     "redux": "^3.7.2"
   },
