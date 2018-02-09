@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { 
-  Breadcrumb, 
-  FormGroup, 
-  FormControl, 
-  Col, 
-  Table, 
-  Form, 
-  ControlLabel, 
-  HelpBlock, 
-  Button, 
+import {
+  Breadcrumb,
+  FormGroup,
+  FormControl,
+  Col,
+  Table,
+  Form,
+  ControlLabel,
+  HelpBlock,
+  Button,
   Modal,
   Row,
   OverlayTrigger,
@@ -18,32 +18,32 @@ import './index.scss';
 
 const headers = [
   {
-    title: "Dashboard",
-    href: "https://www.bovoss.com/dashboard"
+    title: 'Dashboard',
+    href: 'https://www.bovoss.com/dashboard',
   },
   {
-    title: "Accounts",
-    href: "#",
+    title: 'Accounts',
+    href: '#',
     children: [
       {
-        title: "Manage",
-        href: "https://www.bovoss.com/accounts"
-      }
-    ]
-  }
+        title: 'Manage',
+        href: 'https://www.bovoss.com/accounts',
+      },
+    ],
+  },
 ];
 const tableHeaders = [
   'No.',
   'Username',
   'Tổng',
-  "Package",
-  "Avai",
-  "Interest",
-  "Income",
-  "Wallet",
-  "%",
-  "Date",
-  "Actions"
+  'Package',
+  'Avai',
+  'Interest',
+  'Income',
+  'Wallet',
+  '%',
+  'Date',
+  'Actions',
 ];
 
 const TableRow = ({
@@ -86,25 +86,35 @@ const TableRow = ({
         </OverlayTrigger>
 
         <OverlayTrigger placement="top" overlay={<Tooltip id="withdraw">Withdraw</Tooltip>}>
-          <a href="#" onClick={(e) => {
-            e.preventDefault();
-            toggleWithdrawModal(true, { username, avai });
-          }}>
+          <a
+            href="#"
+            onClick={e => {
+              e.preventDefault();
+              toggleWithdrawModal(true, { username, avai });
+            }}
+          >
             <i className="ti-wallet" /> withdraw
           </a>
         </OverlayTrigger>
-        
+
         <OverlayTrigger placement="top" overlay={<Tooltip id="transfer">Transfer</Tooltip>}>
-          <a href="#" onClick={(e) => {
-            e.preventDefault();
-            toggleTransferModal(true, { username });
-          }}>
+          <a
+            href="#"
+            onClick={e => {
+              e.preventDefault();
+              toggleTransferModal(true, { username });
+            }}
+          >
             <i className="ti-share" /> transfer
           </a>
         </OverlayTrigger>
 
         <OverlayTrigger placement="top" overlay={<Tooltip id="delete">Delete</Tooltip>}>
-          <button className="main _button-delete" type="submit" onClick={() => confirm('Are you sure')}>
+          <button
+            className="main _button-delete"
+            type="submit"
+            onClick={() => confirm('Are you sure')}
+          >
             <i className="ti-trash" /> delete
           </button>
         </OverlayTrigger>
@@ -112,44 +122,47 @@ const TableRow = ({
     </td>
   </tr>
 );
-const TableFooter = (data) => {
-  const totalData = data.reduce((acc, account) => {
-    acc.total     += account.total;
-    acc.packages  += account.packages;
-    acc.avai      += account.avai;
-    acc.interest  += account.interest;
-    acc.income    += account.income;
-    acc.wallet    += account.wallet;
-    return acc;
-  }, { total: 0, packages: 0, avai: 0, interest: 0, income: 0, wallet: 0})
+const TableFooter = data => {
+  const totalData = data.reduce(
+    (acc, account) => {
+      acc.total += account.total;
+      acc.packages += account.packages;
+      acc.avai += account.avai;
+      acc.interest += account.interest;
+      acc.income += account.income;
+      acc.wallet += account.wallet;
+      return acc;
+    },
+    { total: 0, packages: 0, avai: 0, interest: 0, income: 0, wallet: 0 }
+  );
 
   return (
     <tr>
-      <td></td>
-      <td></td>
+      <td />
+      <td />
       <td className="main -align-right">{totalData.total}</td>
       <td className="main -align-right">{totalData.packages}</td>
       <td className="main _avai -align-right ">{totalData.avai}</td>
       <td className="main -align-right">{totalData.interest}</td>
       <td className="main -align-right">{totalData.income}</td>
       <td className="main _wallet -align-right">{totalData.wallet}</td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td />
+      <td />
+      <td />
     </tr>
-  )
-}
+  );
+};
 const renderField = ({
   name,
   label,
-  type = "text",
+  type = 'text',
   error = null,
   disabled = false,
   labelSize = 4,
-  value = "",
+  value = '',
   onChange = () => null,
 }) => (
-  <Row style={{paddingBottom: '25px'}}>
+  <Row style={{ paddingBottom: '25px' }}>
     <FormGroup validationState={error ? 'error' : null} controlId={name}>
       <Col componentClass={ControlLabel} sm={12}>
         {label}
@@ -162,15 +175,11 @@ const renderField = ({
           value={value}
           onChange={onChange}
         />
-        {error
-          ? <HelpBlock>
-              {error}
-            </HelpBlock>
-          : null}
+        {error ? <HelpBlock>{error}</HelpBlock> : null}
       </Col>
     </FormGroup>
   </Row>
-)
+);
 export default class MainContainer extends Component {
   constructor(props) {
     super(props);
@@ -188,22 +197,22 @@ export default class MainContainer extends Component {
   toggleWithdrawModal(showWithrawModal, selectedRow = null) {
     this.setState({
       showWithrawModal,
-      selectedRow
-    })
+      selectedRow,
+    });
   }
 
   toggleTransferModal(showTransferModal, selectedRow = null) {
     this.setState({
       showTransferModal,
-      selectedRow
-    })
+      selectedRow,
+    });
   }
 
   renderWithdrawModal() {
     const { showWithrawModal, selectedRow } = this.state;
     const handleClose = () => {
       this.toggleWithdrawModal(false);
-    }
+    };
 
     return (
       <Modal show={showWithrawModal} onHide={handleClose}>
@@ -211,30 +220,34 @@ export default class MainContainer extends Component {
           <Modal.Title>Withdraw</Modal.Title>
         </Modal.Header>
         <Modal.Body className="clearfix">
-        <Form>
-          {renderField({
-            name: 'account',
-            label: 'Account',
-            disabled: true,
-            value: selectedRow && selectedRow.username || ''
-          })}
-          {renderField({
-            name: 'Amount',
-            label: `Amount: (Avai: ${selectedRow ? selectedRow.avai : '0'})`,
-          })}
-          {renderField({
-            name: 'password',
-            label: 'Password 2',
-            type: "password"
-          })}
-          <Col sm={5} smOffset={8}>
-            <Button bsStyle="link" onHide={handleClose}>Close</Button>
-            <Button bsStyle="primary" type="submit">Withdraw</Button>
-          </Col>
-        </Form>
+          <Form>
+            {renderField({
+              name: 'account',
+              label: 'Account',
+              disabled: true,
+              value: (selectedRow && selectedRow.username) || '',
+            })}
+            {renderField({
+              name: 'Amount',
+              label: `Amount: (Avai: ${selectedRow ? selectedRow.avai : '0'})`,
+            })}
+            {renderField({
+              name: 'password',
+              label: 'Password 2',
+              type: 'password',
+            })}
+            <Col sm={5} smOffset={8}>
+              <Button bsStyle="link" onClick={handleClose}>
+                Close
+              </Button>
+              <Button bsStyle="primary" type="submit">
+                Withdraw
+              </Button>
+            </Col>
+          </Form>
         </Modal.Body>
       </Modal>
-    )
+    );
   }
 
   renderTransferModal() {
@@ -242,7 +255,7 @@ export default class MainContainer extends Component {
     const avai = 0;
     const handleClose = () => {
       this.toggleTransferModal(false);
-    }
+    };
 
     return (
       <Modal show={showTransferModal} onHide={handleClose}>
@@ -255,7 +268,7 @@ export default class MainContainer extends Component {
               name: 'sender',
               label: 'Sender',
               disabled: true,
-              value: selectedRow && selectedRow.username || ''
+              value: (selectedRow && selectedRow.username) || '',
             })}
             {renderField({
               name: 'receiver',
@@ -277,31 +290,39 @@ export default class MainContainer extends Component {
             {renderField({
               name: 'password',
               label: 'Password 2',
-              type: "password",
+              type: 'password',
             })}
             <Col sm={5} smOffset={8}>
-              <Button bsStyle="link" onHide={handleClose}>Close</Button>
-              <Button bsStyle="primary" type="submit">Transfer</Button>
+              <Button bsStyle="link" onClick={handleClose}>
+                Close
+              </Button>
+              <Button bsStyle="primary" type="submit">
+                Transfer
+              </Button>
             </Col>
           </Form>
         </Modal.Body>
       </Modal>
-    )
+    );
   }
 
   render() {
-    const { data = [{
-      index: 1,
-      username: "wolftungvn",
-      total: 231,
-      packages: 1000,
-      avai: 41.60,
-      interest: 8.2,
-      income: 100,
-      wallet: 0,
-      percentage: 7,
-      date: "3h",
-    }] } = this.props;
+    const {
+      data = [
+        {
+          index: 1,
+          username: 'wolftungvn',
+          total: 231,
+          packages: 1000,
+          avai: 41.6,
+          interest: 8.2,
+          income: 100,
+          wallet: 0,
+          percentage: 7,
+          date: '3h',
+        },
+      ],
+    } = this.props;
 
     return (
       <div className="main _block">
@@ -309,7 +330,9 @@ export default class MainContainer extends Component {
           <span className="main _title">Manage Account</span>
           <div className="main _breadcrumb-wrapper">
             <Breadcrumb>
-              <Breadcrumb.Item className="breadcrumb-item" href="#">Home</Breadcrumb.Item>
+              <Breadcrumb.Item className="breadcrumb-item" href="#">
+                Home
+              </Breadcrumb.Item>
               <Breadcrumb.Item className="breadcrumb-item" active>
                 Manage Account
               </Breadcrumb.Item>
@@ -317,60 +340,56 @@ export default class MainContainer extends Component {
           </div>
         </div>
         <div className="main _block-card">
-            <div className="main _block-list-accounts">
-              <span className="main _list-accounts-title">List of Accounts</span>
-              <div className="main _add-account">
-                <a href="https://www.bovoss.com/accounts/create">
-                  <div className="main _add-account-button">
-                    <i className="mdi mdi-plus-circle" />
-                    <span>Thêm Tài khoản</span>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div className="main _block-search-accounts">
-              <div className="main _search-input-wrapper">
-                <Col sm={5}>
-                  <FormControl type="text" placeholder="Search by keywords ..."/>
-                </Col>
-              </div>
-              <a className="main _refresh-account" href="https://www.bovoss.com/refresh-user">
-                <span>Refresh All Accounts</span>
+          <div className="main _block-list-accounts">
+            <span className="main _list-accounts-title">List of Accounts</span>
+            <div className="main _add-account">
+              <a href="https://www.bovoss.com/accounts/create">
+                <div className="main _add-account-button">
+                  <i className="mdi mdi-plus-circle" />
+                  <span>Thêm Tài khoản</span>
+                </div>
               </a>
             </div>
-            <div className="main _table-wrapper">
-              <Table className="main _table-accounts" id="table-accounts" responsive>
-                <thead>
-                  <tr>
-                    {tableHeaders.map(header =>
-                      <th key={header}>{header}</th>
-                    )}
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.map((account) =>
-                    <TableRow
-                      key={account.index}
-                      {...account}
-                      toggleWithdrawModal={this.toggleWithdrawModal}
-                      toggleTransferModal={this.toggleTransferModal}
-                    />
-                  )}
-                </tbody>
-                <tfoot>
-                  {TableFooter(data)}
-                  <tr>
-                    <td colSpan="3" className="main _table-footer-summary">
-                      {`Showing ${data.length} entries`}
-                    </td>
-                  </tr>
-                </tfoot>
-              </Table>
-            </div>
           </div>
-          {this.renderWithdrawModal()}
-          {this.renderTransferModal()}
+          <div className="main _block-search-accounts">
+            <div className="main _search-input-wrapper">
+              <Col sm={5}>
+                <FormControl type="text" placeholder="Search by keywords ..." />
+              </Col>
+            </div>
+            <a className="main _refresh-account" href="https://www.bovoss.com/refresh-user">
+              <span>Refresh All Accounts</span>
+            </a>
+          </div>
+          <div className="main _table-wrapper">
+            <Table className="main _table-accounts" id="table-accounts" responsive>
+              <thead>
+                <tr>{tableHeaders.map(header => <th key={header}>{header}</th>)}</tr>
+              </thead>
+              <tbody>
+                {data.map(account => (
+                  <TableRow
+                    key={account.index}
+                    {...account}
+                    toggleWithdrawModal={this.toggleWithdrawModal}
+                    toggleTransferModal={this.toggleTransferModal}
+                  />
+                ))}
+              </tbody>
+              <tfoot>
+                {TableFooter(data)}
+                <tr>
+                  <td colSpan="3" className="main _table-footer-summary">
+                    {`Showing ${data.length} entries`}
+                  </td>
+                </tr>
+              </tfoot>
+            </Table>
+          </div>
+        </div>
+        {this.renderWithdrawModal()}
+        {this.renderTransferModal()}
       </div>
-    )
+    );
   }
 }

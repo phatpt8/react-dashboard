@@ -16,7 +16,8 @@
   "scripts": {
     "start": "NODE_ENV=development && webpack-dev-server --config webpack/webpack.base.js --inline --color --hot",
     "build": "rimraf build && NODE_ENV=production webpack --config webpack/webpack.base.js --progress --profile --bail",
-    "build:bootstrap": "mkdir -p build && cp -R node_modules/bootstrap/dist/* build/"
+    "build:bootstrap": "mkdir -p build && cp -R node_modules/bootstrap/dist/* build/",
+    "prettier": "./node_modules/prettier-eslint-cli/dist/index.js --write \"src/**/*.{js,jsx}\""
   },
   "dependencies": {
     "bootstrap": "3.3.6",
@@ -50,6 +51,7 @@
     "node-sass": "^4.7.2",
     "postcss-loader": "^2.1.0",
     "prettier": "1.9.2",
+    "prettier-eslint-cli": "^4.7.0",
     "react-hot-loader": "^3.1.1",
     "rimraf": "^2.6.2",
     "sass-loader": "^6.0.6",

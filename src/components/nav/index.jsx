@@ -4,9 +4,7 @@ import { toggleNavigationLeft } from 'actions/nav.reducer';
 import './index.scss';
 
 class Navigation extends Component {
-
   render() {
-
     return (
       <div className="navigation _block">
         <div className="navigation _content">
@@ -15,17 +13,25 @@ class Navigation extends Component {
           </div>
           <div className="navigation _logo">
             <a href="/index.html">
-              <img className="navigation _logo-image" src="https://www.bovoss.com/backend/assets/images/skymining-pool.png" alt="" />
+              <img
+                className="navigation _logo-image"
+                src="https://www.bovoss.com/backend/assets/images/skymining-pool.png"
+                alt=""
+              />
             </a>
           </div>
           <div className="navigation _user">
             <a href="#" className="navigation _profile">
-              <img className="navigation _profile-image" src="https://www.bovoss.com/backend/assets/images/users/man-02.png" alt="user" />
+              <img
+                className="navigation _profile-image"
+                src="https://www.bovoss.com/backend/assets/images/users/man-02.png"
+                alt="user"
+              />
             </a>
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
