@@ -5,10 +5,12 @@ import './index.scss';
 
 const headers = [
   {
+    icon: <i className="mdi mdi-gauge" />,
     title: "Dashboard",
     href: "https://www.bovoss.com/dashboard"
   },
   {
+    icon: <i className="mdi mdi-arrange-send-backward" />,
     title: "Accounts",
     href: "#",
     children: [
@@ -37,7 +39,6 @@ class NavLeft extends Component {
           <ul className="navleft _nav-list">
             {headers.map(header => 
               <li key={header.title}>
-
                 <a 
                   className="navleft _nav-link" 
                   href={header.href}
@@ -51,6 +52,7 @@ class NavLeft extends Component {
                     }
                   }}
                 >
+                  {header.icon}
                   <span>{header.title}</span>
                 </a>
 

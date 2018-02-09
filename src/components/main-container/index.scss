@@ -10,7 +10,10 @@
   &._block-title {
     display: flex;
     justify-content: space-between;
-    padding: 30px 15px;
+    padding: 30px 0 20px;
+    .breadcrumb {
+      margin-bottom: 0;
+    }
   }
   &._title {
     width: 100%;
@@ -41,7 +44,7 @@
   &._block-list-accounts {
     display: flex;
     justify-content: space-between;
-    padding: 10px 20px;
+    padding: 12px 20px;
     border-bottom: 1px solid #F3F1F1;
   }
   &._list-accounts-title {
@@ -107,5 +110,16 @@
         font-size: 16px;
       }
     }
+  }
+  &._button-delete {
+    -webkit-appearance: none;
+    border: none;
+    background-color: transparent;
+  }
+}
+
+@media (min-width: 576px) {
+  .modal-dialog {
+    max-width: 500px;
   }
 }

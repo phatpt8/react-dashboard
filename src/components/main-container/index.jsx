@@ -11,6 +11,8 @@ import {
   Button, 
   Modal,
   Row,
+  OverlayTrigger,
+  Tooltip,
 } from 'react-bootstrap';
 import './index.scss';
 
@@ -70,27 +72,42 @@ const TableRow = ({
     <td>{percentage}</td>
     <td>{date}</td>
     <td>
-      <Form action="https://www.bovoss.com/accounts/2">
-        <a href={`https://www.bovoss.com/crawler/${index}`}>
-          <i className="ti-reload" />
-        </a>
-        <a href={`https://www.bovoss.com/accounts/${index}/edit`}>
-          <i className="ti-marker-alt" />
-        </a>
-        <a href="#" onClick={(e) => {
-          e.preventDefault();
-          toggleWithdrawModal(true);
-        }}>
-          <i className="ti-wallet" />
-          withdraw
-        </a>
-        <a href="#" onClick={(e) => {
-          e.preventDefault();
-          toggleTransferModal(true);
-        }}>
-          <i className="ti-share" />
-          transfer
-        </a>
+      <Form action={`https://www.bovoss.com/accounts/${index}`}>
+        <OverlayTrigger placement="top" overlay={<Tooltip id="crawl">Crawl</Tooltip>}>
+          <a href={`https://www.bovoss.com/crawler/${index}`}>
+            <i className="ti-reload" /> crawl
+          </a>
+        </OverlayTrigger>
+
+        <OverlayTrigger placement="top" overlay={<Tooltip id="edit">Edit</Tooltip>}>
+          <a href={`https://www.bovoss.com/accounts/${index}/edit`}>
+            <i className="ti-marker-alt" /> edit
+          </a>
+        </OverlayTrigger>
+
+        <OverlayTrigger placement="top" overlay={<Tooltip id="withdraw">Withdraw</Tooltip>}>
+          <a href="#" onClick={(e) => {
+            e.preventDefault();
+            toggleWithdrawModal(true, { username, avai });
+          }}>
+            <i className="ti-wallet" /> withdraw
+          </a>
+        </OverlayTrigger>
+        
+        <OverlayTrigger placement="top" overlay={<Tooltip id="transfer">Transfer</Tooltip>}>
+          <a href="#" onClick={(e) => {
+            e.preventDefault();
+            toggleTransferModal(true, { username });
+          }}>
+            <i className="ti-share" /> transfer
+          </a>
+        </OverlayTrigger>
+
+        <OverlayTrigger placement="top" overlay={<Tooltip id="delete">Delete</Tooltip>}>
+          <button className="main _button-delete" type="submit" onClick={() => confirm('Are you sure')}>
+            <i className="ti-trash" /> delete
+          </button>
+        </OverlayTrigger>
       </Form>
     </td>
   </tr>
@@ -169,7 +186,6 @@ export default class MainContainer extends Component {
   }
 
   toggleWithdrawModal(showWithrawModal, selectedRow = null) {
-    console.log(showWithrawModal);
     this.setState({
       showWithrawModal,
       selectedRow
@@ -188,7 +204,6 @@ export default class MainContainer extends Component {
     const handleClose = () => {
       this.toggleWithdrawModal(false);
     }
-    console.log('renderWithdrawModal', showWithrawModal);
 
     return (
       <Modal show={showWithrawModal} onHide={handleClose}>
@@ -196,29 +211,27 @@ export default class MainContainer extends Component {
           <Modal.Title>Withdraw</Modal.Title>
         </Modal.Header>
         <Modal.Body className="clearfix">
-          <Col sm={12} className="main _withdraw-modal">
-            <Form>
-              {renderField({
-                name: 'account',
-                label: 'Account',
-                disabled: true,
-                value: 'wtf'
-              })}
-              {renderField({
-                name: 'Amount',
-                label: `Amount: (Avai: ${selectedRow ? selectedRow.avai : '0'})`,
-              })}
-              {renderField({
-                name: 'password',
-                label: 'Password 2',
-                type: "password"
-              })}
-              <Col sm={4} smOffset={8}>
-                <Button bsStyle="link">Close</Button>
-                <Button bsStyle="primary">Withdraw</Button>
-              </Col>
-            </Form>
+        <Form>
+          {renderField({
+            name: 'account',
+            label: 'Account',
+            disabled: true,
+            value: selectedRow && selectedRow.username || ''
+          })}
+          {renderField({
+            name: 'Amount',
+            label: `Amount: (Avai: ${selectedRow ? selectedRow.avai : '0'})`,
+          })}
+          {renderField({
+            name: 'password',
+            label: 'Password 2',
+            type: "password"
+          })}
+          <Col sm={5} smOffset={8}>
+            <Button bsStyle="link" onHide={handleClose}>Close</Button>
+            <Button bsStyle="primary" type="submit">Withdraw</Button>
           </Col>
+        </Form>
         </Modal.Body>
       </Modal>
     )
@@ -232,29 +245,43 @@ export default class MainContainer extends Component {
     }
 
     return (
-      <Modal show={showTransferModal}>
-        <Modal.Header closeButton onHide={handleClose}>
+      <Modal show={showTransferModal} onHide={handleClose}>
+        <Modal.Header closeButton>
           <Modal.Title>Transfer</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="clearfix">
           <Form>
             {renderField({
-              name: 'account',
-              label: 'Account',
+              name: 'sender',
+              label: 'Sender',
               disabled: true,
-              value: 'wtf'
+              value: selectedRow && selectedRow.username || ''
             })}
             {renderField({
-              name: 'Amount',
-              label: `Amount: (Avai: ${avai})`,
+              name: 'receiver',
+              label: 'Receiver',
+            })}
+            {renderField({
+              name: 'fullname',
+              label: 'Full Name',
+              disabled: true,
+            })}
+            {renderField({
+              name: 'amount',
+              label: 'Amount',
+            })}
+            {renderField({
+              name: 'note',
+              label: 'Note',
             })}
             {renderField({
               name: 'password',
               label: 'Password 2',
-              type: "password"
+              type: "password",
             })}
-            <Col sm={12}>
-
+            <Col sm={5} smOffset={8}>
+              <Button bsStyle="link" onHide={handleClose}>Close</Button>
+              <Button bsStyle="primary" type="submit">Transfer</Button>
             </Col>
           </Form>
         </Modal.Body>
