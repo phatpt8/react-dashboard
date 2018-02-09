@@ -1,5 +1,16 @@
 .root {
   &._block {
+    position: relative;
     background-color: #EEF5F9;
+    @media (max-width: 767px) {
+      display: block;
+    }
+  }
+  &._footer {
+    text-align: center;
+    border-top: 1px solid rgba(120, 130, 140, 0.13);
+    padding: 17px 15px;
+    height: 60px;
+    background-color: #FFF;
   }
 }

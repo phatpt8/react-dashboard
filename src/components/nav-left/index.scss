@@ -5,6 +5,32 @@
     padding: 0 15px;
     background: #FFF;
     box-shadow: 1px 0px 20px rgba(0, 0, 0, .08);
+
+    @media (max-width: 767px) {
+      display: none;
+    }
+    &.-show {
+      display: block;
+      left: 0;
+      top: 60px;
+      width: 260px;
+      position: absolute;
+      bottom: 0;
+      overflow: auto;
+
+      ._nav-list {
+        > li {
+          display: block;
+        }
+        &.-child-list {
+          box-shadow: none;
+          position: relative;
+          > li {
+            padding: 0 0 0 25px;
+          }
+        }
+      }
+    }
   }
   &._nav-wrapper {
     max-width: 1280px;
@@ -18,9 +44,11 @@
       display: inline-block;
       position: relative;
 
-      &:hover {
-        .-child-list {
-          display: block;
+      @media (min-width: 768px) {
+        &:hover {
+          .-child-list {
+            display: block;
+          }
         }
       }
     }
@@ -41,6 +69,9 @@
         ._nav-link {
           padding: 7px 10px;
         }
+      }
+      &.-show {
+        display: block;
       }
     }
   }

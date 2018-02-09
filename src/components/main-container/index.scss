@@ -1,7 +1,11 @@
 .main {
   &._block {
     max-width: 1280px;
+    height: calc(100vh - 60px - 48px - 70px);
     margin: 0 auto;
+    @media (max-width: 767px) {
+      height: calc(100vh - 60px - 60px);
+    }
   }
   &._block-title {
     display: flex;
@@ -70,5 +74,38 @@
   }
   &._table-wrapper {
     padding: 0px 20px 20px;
+  }
+  &._table-accounts {
+    .-align-right {
+      text-align: right;
+    }
+    tbody tr:nth-of-type(odd) {
+      background-color: #F2F4F8;
+    }
+    tbody td {
+      padding: 12px 7px;
+      &._avai {
+        background-color: #CBDFD0;
+      }
+      &._wallet {
+        background-color: rgba(223, 222, 201, .36);
+      }
+    }
+    tfoot td {
+      font-weight: 500;
+      background-color: #BBC7C4;
+      &._avai {
+        background-color: #8FDF82;;
+      }
+      &._wallet {
+        background-color: #D0DF88;
+      }
+      &._table-footer-summary {
+        background-color: #FFF;
+        font-weight: 300;
+        color: #67757C;
+        font-size: 16px;
+      }
+    }
   }
 }

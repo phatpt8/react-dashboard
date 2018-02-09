@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import classNames from 'classnames';
 import './index.scss';
 
 const headers = [
@@ -18,23 +20,44 @@ const headers = [
   }
 ]
 
-export default class NavLeft extends Component {
+class NavLeft extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {}
+  }
 
   render() {
 
     return (
-      <div className="navleft _block">
+      <div className={classNames('navleft _block', {
+        '-show': this.props.showNavLeft
+      })}>
         <div className="navleft _nav-wrapper">
           <ul className="navleft _nav-list">
             {headers.map(header => 
               <li key={header.title}>
 
-                <a className="navleft _nav-link" href={header.href}>
+                <a 
+                  className="navleft _nav-link" 
+                  href={header.href}
+                  onClick={(e) => {
+                    if (header.children) {
+                      e.preventDefault();
+                      const showHeader = this.state[header.title];
+                      this.setState({
+                        [header.title]: !showHeader
+                      });
+                    }
+                  }}
+                >
                   <span>{header.title}</span>
                 </a>
 
-                {!!header.children && header.children.length > 0 && 
-                  <ul className="navleft _nav-list -child-list">
+                {!!header.children && header.children.length && 
+                  <ul className={classNames('navleft _nav-list -child-list', {
+                    '-show': this.state[header.title]
+                  })}>
                     {header.children.map(child => 
                       <li className="navleft _nav-item" key={child.title}>
                         <a className="navleft _nav-link" href={child.href}>
@@ -53,3 +76,5 @@ export default class NavLeft extends Component {
     )
   }
 }
+
+export default connect(state => state.navigation, null)(NavLeft);

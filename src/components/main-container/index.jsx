@@ -1,5 +1,17 @@
 import React, { Component } from 'react';
-import { Breadcrumb, FormGroup, FormControl, Col, Table, Form, ControlLabel, HelpBlock, Button, Modal } from 'react-bootstrap';
+import { 
+  Breadcrumb, 
+  FormGroup, 
+  FormControl, 
+  Col, 
+  Table, 
+  Form, 
+  ControlLabel, 
+  HelpBlock, 
+  Button, 
+  Modal,
+  Row,
+} from 'react-bootstrap';
 import './index.scss';
 
 const headers = [
@@ -49,12 +61,12 @@ const TableRow = ({
   <tr>
     <td>{index}</td>
     <td>{username}</td>
-    <td>{total}</td>
-    <td>{packages}</td>
-    <td>{avai}</td>
-    <td>{interest}</td>
-    <td>{income}</td>
-    <td>{wallet}</td>
+    <td className="main -align-right">{total}</td>
+    <td className="main -align-right">{packages}</td>
+    <td className="main -align-right _avai">{avai}</td>
+    <td className="main -align-right">{interest}</td>
+    <td className="main -align-right">{income}</td>
+    <td className="main -align-right _wallet">{wallet}</td>
     <td>{percentage}</td>
     <td>{date}</td>
     <td>
@@ -83,6 +95,33 @@ const TableRow = ({
     </td>
   </tr>
 );
+const TableFooter = (data) => {
+  const totalData = data.reduce((acc, account) => {
+    acc.total     += account.total;
+    acc.packages  += account.packages;
+    acc.avai      += account.avai;
+    acc.interest  += account.interest;
+    acc.income    += account.income;
+    acc.wallet    += account.wallet;
+    return acc;
+  }, { total: 0, packages: 0, avai: 0, interest: 0, income: 0, wallet: 0})
+
+  return (
+    <tr>
+      <td></td>
+      <td></td>
+      <td className="main -align-right">{totalData.total}</td>
+      <td className="main -align-right">{totalData.packages}</td>
+      <td className="main _avai -align-right ">{totalData.avai}</td>
+      <td className="main -align-right">{totalData.interest}</td>
+      <td className="main -align-right">{totalData.income}</td>
+      <td className="main _wallet -align-right">{totalData.wallet}</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  )
+}
 const renderField = ({
   name,
   label,
@@ -93,7 +132,8 @@ const renderField = ({
   value = "",
   onChange = () => null,
 }) => (
-  <FormGroup validationState={error ? 'error' : null} controlId={name}>
+  <Row style={{paddingBottom: '25px'}}>
+    <FormGroup validationState={error ? 'error' : null} controlId={name}>
       <Col componentClass={ControlLabel} sm={12}>
         {label}
       </Col>
@@ -112,6 +152,7 @@ const renderField = ({
           : null}
       </Col>
     </FormGroup>
+  </Row>
 )
 export default class MainContainer extends Component {
   constructor(props) {
@@ -150,34 +191,34 @@ export default class MainContainer extends Component {
     console.log('renderWithdrawModal', showWithrawModal);
 
     return (
-      <Modal show={showWithrawModal} onHide={handleClose} bsSize="sm">
+      <Modal show={showWithrawModal} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Withdraw</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <div className="main _withdraw-modal clearfix">
-          <Form>
-            {renderField({
-              name: 'account',
-              label: 'Account',
-              disabled: true,
-              value: 'wtf'
-            })}
-            {renderField({
-              name: 'Amount',
-              label: `Amount: (Avai: ${selectedRow ? selectedRow.avai : '0'})`,
-            })}
-            {renderField({
-              name: 'password',
-              label: 'Password 2',
-              type: "password"
-            })}
-            <Col sm={12}>
-              <Button bsStyle="link">Close</Button>
-              <Button bsStyle="primary">Withdraw</Button>
-            </Col>
-          </Form>
-          </div>
+        <Modal.Body className="clearfix">
+          <Col sm={12} className="main _withdraw-modal">
+            <Form>
+              {renderField({
+                name: 'account',
+                label: 'Account',
+                disabled: true,
+                value: 'wtf'
+              })}
+              {renderField({
+                name: 'Amount',
+                label: `Amount: (Avai: ${selectedRow ? selectedRow.avai : '0'})`,
+              })}
+              {renderField({
+                name: 'password',
+                label: 'Password 2',
+                type: "password"
+              })}
+              <Col sm={4} smOffset={8}>
+                <Button bsStyle="link">Close</Button>
+                <Button bsStyle="primary">Withdraw</Button>
+              </Col>
+            </Form>
+          </Col>
         </Modal.Body>
       </Modal>
     )
@@ -226,7 +267,7 @@ export default class MainContainer extends Component {
       index: 1,
       username: "wolftungvn",
       total: 231,
-      packages: "1,000",
+      packages: 1000,
       avai: 41.60,
       interest: 8.2,
       income: 100,
@@ -254,6 +295,7 @@ export default class MainContainer extends Component {
               <div className="main _add-account">
                 <a href="https://www.bovoss.com/accounts/create">
                   <div className="main _add-account-button">
+                    <i className="mdi mdi-plus-circle" />
                     <span>Thêm Tài khoản</span>
                   </div>
                 </a>
@@ -270,7 +312,7 @@ export default class MainContainer extends Component {
               </a>
             </div>
             <div className="main _table-wrapper">
-              <Table id="table-accounts" striped bordered responsive>
+              <Table className="main _table-accounts" id="table-accounts" responsive>
                 <thead>
                   <tr>
                     {tableHeaders.map(header =>
@@ -288,6 +330,14 @@ export default class MainContainer extends Component {
                     />
                   )}
                 </tbody>
+                <tfoot>
+                  {TableFooter(data)}
+                  <tr>
+                    <td colSpan="3" className="main _table-footer-summary">
+                      {`Showing ${data.length} entries`}
+                    </td>
+                  </tr>
+                </tfoot>
               </Table>
             </div>
           </div>

@@ -35,7 +35,8 @@ module.exports = {
         ],
         alias: {
             main: 'src',
-            components: sourcePath + '/components'
+            components: sourcePath + '/components',
+            actions: sourcePath + '/actions',
         },
         extensions: ['.js', '.jsx', '.css', '.sass', '.svg', '.html', '.ico']
     },
