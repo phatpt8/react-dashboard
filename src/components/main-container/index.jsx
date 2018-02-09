@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   Breadcrumb,
   FormGroup,
@@ -180,7 +181,7 @@ const renderField = ({
     </FormGroup>
   </Row>
 );
-export default class MainContainer extends Component {
+class MainContainer extends Component {
   constructor(props) {
     super(props);
 
@@ -307,22 +308,7 @@ export default class MainContainer extends Component {
   }
 
   render() {
-    const {
-      data = [
-        {
-          index: 1,
-          username: 'wolftungvn',
-          total: 231,
-          packages: 1000,
-          avai: 41.6,
-          interest: 8.2,
-          income: 100,
-          wallet: 0,
-          percentage: 7,
-          date: '3h',
-        },
-      ],
-    } = this.props;
+    const { data } = this.props;
 
     return (
       <div className="main _block">
@@ -393,3 +379,5 @@ export default class MainContainer extends Component {
     );
   }
 }
+
+export default connect(state => state.accounts, null)(MainContainer);
