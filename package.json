@@ -14,14 +14,16 @@
     "url": "git@github.com:phatpt8/react-dashboard.git"
   },
   "scripts": {
-    "start": "NODE_ENV=development && webpack-dev-server --config webpack/webpack.base.js --inline --color --hot",
-    "build": "rimraf build && NODE_ENV=production webpack --config webpack/webpack.base.js --progress --profile --bail",
+    "build": "rimraf build && NODE_ENV=production webpack --config webpack/webpack.base.js --progress --profile --bail && npm run build:bootstrap && npm run build:mdi",
+    "start": "npm run build && NODE_ENV=development && webpack-dev-server --config webpack/webpack.base.js --inline --color --hot",
     "build:bootstrap": "mkdir -p build && cp -R node_modules/bootstrap/dist/* build/",
+    "build:mdi": "mkdir -p build && cp -R node_modules/mdi/css/materialdesignicons.min.css build/css && cp -R node_modules/mdi/fonts/* build/fonts",
     "prettier": "./node_modules/prettier-eslint-cli/dist/index.js --write \"src/**/*.{js,jsx}\""
   },
   "dependencies": {
     "bootstrap": "3.3.6",
     "classnames": "^2.2.5",
+    "mdi": "1.8.36",
     "prop-types": "^15.6.0",
     "querystring": "^0.2.0",
     "react": "15.4.2",
@@ -56,6 +58,7 @@
     "rimraf": "^2.6.2",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.13.2",
+    "url-loader": "^0.6.2",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.11.1"
   },

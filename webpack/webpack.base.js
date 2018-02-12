@@ -37,6 +37,7 @@ module.exports = {
             main: 'src',
             components: sourcePath + '/components',
             actions: sourcePath + '/actions',
+            public: sourcePath + '/public',
         },
         extensions: ['.js', '.jsx', '.css', '.sass', '.svg', '.html', '.ico']
     },
@@ -82,9 +83,9 @@ module.exports = {
             loader: 'file-loader',
             options: {
               name: 'images/[name].[ext]'
-            },
-        },
-        ]
+            },  
+        }
+      ]
     },
     plugins: prodPlugins([
         new webpack.DefinePlugin({
