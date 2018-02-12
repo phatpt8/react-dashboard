@@ -78,6 +78,19 @@
   &._table-wrapper {
     padding: 0px 20px 20px;
   }
+  &._actions-button {
+    color: #2F3D4A;
+    text-decoration: none;
+    padding-right: 10px;
+    background-color: transparent;
+    &:hover {
+      color: #2F3D4A;
+      text-decoration: none;
+    }
+    &.-last {
+      padding-right: 3px;
+    }
+  }
   &._table-accounts {
     .-align-right {
       text-align: right;
@@ -104,6 +117,7 @@
         background-color: #D0DF88;
       }
       &._table-footer-summary {
+        border-top: none;
         background-color: #FFF;
         font-weight: 300;
         color: #67757C;

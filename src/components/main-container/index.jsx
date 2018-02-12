@@ -16,6 +16,7 @@ import {
   Tooltip,
   // Pagination,
 } from 'react-bootstrap';
+import { sortByColumn, withdraw } from 'actions/accounts.reducer';
 import './index.scss';
 
 const headers = [
@@ -34,19 +35,18 @@ const headers = [
     ],
   },
 ];
-const tableHeaders = [
-  'No.',
-  'Username',
-  'Tổng',
-  'Package',
-  'Avai',
-  'Interest',
-  'Income',
-  'Wallet',
-  '%',
-  'Date',
-  'Actions',
-];
+const tableHeaders = {
+  index: 'No.',
+  username: 'Username',
+  total: 'Tổng',
+  packages: 'packages',
+  avai: 'Avai',
+  interest: 'Interest',
+  income: 'Income',
+  wallet: 'Wallet',
+  percentage: '%',
+  date: 'Date',
+};
 
 const TableRow = ({
   index,
@@ -76,38 +76,43 @@ const TableRow = ({
     <td>
       <Form action={`https://www.bovoss.com/accounts/${index}`}>
         <OverlayTrigger placement="top" overlay={<Tooltip id="crawl">Crawl</Tooltip>}>
-          <a href={`https://www.bovoss.com/crawler/${index}`}>
-            <i className="ti-reload" /> crawl
+          <a className="main _actions-button" href={`https://www.bovoss.com/crawler/${index}`}>
+            <i className="mdi mdi-reload" />
           </a>
         </OverlayTrigger>
 
         <OverlayTrigger placement="top" overlay={<Tooltip id="edit">Edit</Tooltip>}>
-          <a href={`https://www.bovoss.com/accounts/${index}/edit`}>
-            <i className="ti-marker-alt" /> edit
+          <a
+            className="main _actions-button"
+            href={`https://www.bovoss.com/accounts/${index}/edit`}
+          >
+            <i className="mdi mdi-pencil" />
           </a>
         </OverlayTrigger>
 
         <OverlayTrigger placement="top" overlay={<Tooltip id="withdraw">Withdraw</Tooltip>}>
           <a
+            className="main _actions-button"
             href="#"
             onClick={e => {
               e.preventDefault();
               toggleWithdrawModal(true, { username, avai });
             }}
           >
-            <i className="ti-wallet" /> withdraw
+            <i className="mdi mdi-wallet" />
           </a>
         </OverlayTrigger>
 
         <OverlayTrigger placement="top" overlay={<Tooltip id="transfer">Transfer</Tooltip>}>
           <a
+            className="main _actions-button -last"
             href="#"
             onClick={e => {
               e.preventDefault();
               toggleTransferModal(true, { username });
             }}
           >
-            <i className="ti-share" /> transfer
+            <i className="mdi mdi-share-variant" />
           </a>
         </OverlayTrigger>
 
@@ -117,7 +122,7 @@ const TableRow = ({
             type="submit"
             onClick={() => confirm('Are you sure')}
           >
-            <i className="ti-trash" /> delete
+            <i className="mdi mdi-delete" />
           </button>
         </OverlayTrigger>
       </Form>
@@ -162,7 +167,7 @@ const renderField = ({
   disabled = false,
   labelSize = 4,
   value = '',
-  onChange = () => null,
+  onChange,
 }) => (
   <Row style={{ paddingBottom: '25px' }}>
     <FormGroup validationState={error ? 'error' : null} controlId={name}>
@@ -174,7 +179,7 @@ const renderField = ({
           name={name}
           type={type}
           disabled={disabled}
-          value={value}
+          defaultValue={value}
           onChange={onChange}
         />
         {error ? <HelpBlock>{error}</HelpBlock> : null}
@@ -222,19 +227,19 @@ class MainContainer extends Component {
           <Modal.Title>Withdraw</Modal.Title>
         </Modal.Header>
         <Modal.Body className="clearfix">
-          <Form>
+          <Form action="" method="POST">
             {renderField({
-              name: 'account',
+              name: 'accountUsername',
               label: 'Account',
               disabled: true,
               value: (selectedRow && selectedRow.username) || '',
             })}
             {renderField({
-              name: 'Amount',
+              name: 'amount',
               label: `Amount: (Avai: ${selectedRow ? selectedRow.avai : '0'})`,
             })}
             {renderField({
-              name: 'password',
+              name: 'passLevel2',
               label: 'Password 2',
               type: 'password',
             })}
@@ -309,7 +314,8 @@ class MainContainer extends Component {
   }
 
   render() {
-    const { data } = this.props;
+    const { data, sort, sortByColumn, withdraw } = this.props;
+    console.log('sort[key]=>', this.props);
 
     return (
       <div className="main _block">
@@ -351,12 +357,24 @@ class MainContainer extends Component {
           <div className="main _table-wrapper">
             <Table className="main _table-accounts" id="table-accounts" responsive>
               <thead>
-                <tr>{tableHeaders.map(header => <th key={header}>{header}</th>)}</tr>
+                <tr>
+                  {Object.keys(tableHeaders).map(key => (
+                    <th key={key} onClick={() => sortByColumn(key)}>
+                      {tableHeaders[key]}
+                      {sort[key] ? (
+                        <i className="mdi mdi-menu-up" />
+                      ) : (
+                        <i className="mdi mdi-menu-down" />
+                      )}
+                    </th>
+                  ))}
+                  <th>Actions</th>
+                </tr>
               </thead>
               <tbody>
-                {data.map(account => (
+                {data.map((account, i) => (
                   <TableRow
-                    key={account.index}
+                    key={i}
                     {...account}
                     toggleWithdrawModal={this.toggleWithdrawModal}
                     toggleTransferModal={this.toggleTransferModal}
@@ -381,4 +399,4 @@ class MainContainer extends Component {
   }
 }
 
-export default connect(state => state.accounts, null)(MainContainer);
+export default connect(state => state.accounts, { withdraw, sortByColumn })(MainContainer);

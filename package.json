@@ -29,6 +29,8 @@
     "react": "15.4.2",
     "react-bootstrap": "^0.32.1",
     "react-dom": "15.4.2",
+    "react-notification-system": "^0.2.16",
+    "react-notification-system-redux": "^1.2.0",
     "react-redux": "^4.4.5",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0"
