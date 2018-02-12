@@ -315,7 +315,6 @@ class MainContainer extends Component {
 
   render() {
     const { data, sort, sortByColumn, withdraw } = this.props;
-    console.log('sort[key]=>', this.props);
 
     return (
       <div className="main _block">

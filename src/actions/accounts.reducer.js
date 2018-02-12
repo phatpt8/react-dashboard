@@ -1,4 +1,5 @@
 import Notifications from 'react-notification-system-redux';
+import { getAccounts } from 'api/accounts';
 
 export const LOADING = '@main/LOADING';
 export const GET_ACCOUNTS = '@main/GET_ACCOUNTS';
@@ -48,6 +49,11 @@ export default (state = initialState, action) => {
       return state;
   }
 };
+
+export const loadData = async () => {
+  const { data } = await getAccounts();
+  console.log(data);
+}
 
 export const sortByColumn = colField => (dispatch, getState) => {
   const { data, sort } = getState().accounts;

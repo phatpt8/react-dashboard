@@ -64,6 +64,11 @@
       color: #FFF;
     }
   }
+  &._add-account-button {
+    .mdi { //material design icon
+      padding-right: 7px;
+    }
+  }
   &._block-search-accounts {
     display: flex;
     justify-content: space-between;

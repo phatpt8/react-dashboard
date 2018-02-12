@@ -38,6 +38,7 @@ module.exports = {
             components: sourcePath + '/components',
             actions: sourcePath + '/actions',
             public: sourcePath + '/public',
+            api: sourcePath + '/api',
         },
         extensions: ['.js', '.jsx', '.css', '.sass', '.svg', '.html', '.ico']
     },
@@ -49,7 +50,8 @@ module.exports = {
             use: [{
                 loader: 'babel-loader',
                 options: {
-                    presets: ['env', 'stage-0', 'react']
+                    presets: ['env', 'stage-0', 'react'],
+                    plugins: ['transform-runtime']
                 }
             }]
         }, {
