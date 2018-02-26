@@ -8,7 +8,7 @@ import Root from 'components/root';
 import Navigation from 'components/nav';
 import NavLeft from 'components/nav-left';
 import Loading from 'components/loading';
-import MainContainer from 'components/main-container';
+import ManageAccount from 'components/manage-account';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducers, composeEnhancers(applyMiddleware(thunkMiddleware)));
@@ -19,7 +19,7 @@ render(
       <Loading />
       <Navigation />
       <NavLeft />
-      <MainContainer />
+      <ManageAccount />
     </Root>
   </Provider>,
   document.getElementById('container')

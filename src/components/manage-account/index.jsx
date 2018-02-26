@@ -187,7 +187,7 @@ const renderField = ({
     </FormGroup>
   </Row>
 );
-class MainContainer extends Component {
+class ManageAccount extends Component {
   constructor(props) {
     super(props);
 
@@ -398,4 +398,4 @@ class MainContainer extends Component {
   }
 }
 
-export default connect(state => state.accounts, { withdraw, sortByColumn })(MainContainer);
+export default connect(state => state.accounts, { withdraw, sortByColumn })(ManageAccount);

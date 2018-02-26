@@ -13,11 +13,13 @@
   }
   &._toggle-nav-left {
     display: none;
-    width: 50px;
-    height: 50px;
-    background-color: red;
     @media (max-width: 767px) {
       display: block;
+    }
+    .mdi-menu {
+      font-size: 32px;
+      line-height: 55px;
+      color: #FFF;
     }
   }
   &._logo {
